@@ -1,0 +1,45 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap');
+
+.group{
+    font-family:  var(--font);
+    font-size: 15px;
+
+
+
+
+}
+.hour{
+
+    font-family:  var(--font);
+    font-size: 15px;
+
+    text-align: left;
+
+
+
+}
+.headerCard{
+    font-weight: lighter;
+    font-size: 18px;
+    line-height: 26px;
+
+    color: #292B38;
+    text-align: left;
+    font-family: raleway_f,sans-serif;
+    margin-bottom: 4px;
+
+}
+.price{
+
+    font-weight: lighter;
+    font-size: 25px;
+    line-height: 28px;
+
+    font-family: 'Cairo', sans-serif;
+}
+.ExpandMore{
+
+    text-align: center;
+
+}

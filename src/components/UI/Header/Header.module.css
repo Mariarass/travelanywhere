@@ -1,0 +1,43 @@
+.language{
+   width: 20px;
+   margin-right: 5px;
+
+
+}
+.navBarContainer{
+
+   display: flex;
+   align-items: center;
+   gap: 40px;
+
+}
+.link {
+   text-decoration: none;
+   font-family: 'Raleway', sans-serif;
+   font-weight: 600;
+   margin: 15px;
+}
+.menuBar{
+   display: none;
+
+}
+@media (max-width: 650px) {
+   .menuBar{
+      display: flex;
+
+   }
+   .navBar{
+      display: none;
+   }
+
+   .navLink{
+      display: none;
+   }
+   .navBarContainer{
+      gap: 10px;
+      padding-right: 13px;
+   }
+
+
+
+}
