@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {FC, forwardRef, useState} from 'react';
 import s from './CardTicket.module.css'
 import {
     Box,
     Card,
     CardActionArea,
-    CardMedia,
     Collapse,
     IconButton,
     IconButtonProps,
@@ -15,6 +14,8 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import Grid from "@mui/material/Unstable_Grid2";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Email, MailOutline} from '@mui/icons-material';
+import {TypeTicket} from "../../redux/ticket-reducer";
+import {motion} from "framer-motion";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -31,7 +32,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     }),
 }));
 
-const CardTicket = () => {
+
+type TypeCardTicket = {
+    ticket: TypeTicket
+}
+export const CardTicket: FC<TypeCardTicket> = forwardRef(({ticket}, ref:any) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
@@ -41,24 +46,17 @@ const CardTicket = () => {
     return (
 
         <Grid>
-            <Card sx={{minWidth: 200, borderRadius: 3, '&:hover': {background: '#FFE5A0'}}}>
+            <Card sx={{minWidth: 200, borderRadius: 3, '&:hover': {background: '#efefef'}}} ref={ref}>
                 <CardActionArea sx={{padding: 2}} onClick={handleExpandClick}>
-                    <CardMedia sx={{borderRadius: 2}}
-                               component="img"
-                               height="200"
-                               image="https://sun9-56.userapi.com/impg/C-wUhToXs-GIq-1_RNTB63eBd32uVbAm_ohEcA/WkjOYvuxcoA.jpg?size=939x1080&quality=96&sign=f24a53a7723207ac8d304e43dbea7cf0&type=album"
-                               alt="Paella dish"
-                    />
+                    <img src={ticket.img} className={s.img}/>
 
-
-                    <Box width='230px' mt='10px' height='60px' display='flex'  alignItems='center'>
+                    <div className={s.headerContainer}>
 
                         <h3 className={s.headerCard}>
-                            Бурдж-Халифа
-                            124 этаж и 125 этаж
+                            {ticket.header}
                         </h3>
 
-                    </Box>
+                    </div>
                     <div className={s.ExpandMore}>
                         <ExpandMore
                             expand={expanded}
@@ -85,15 +83,15 @@ const CardTicket = () => {
                             }}/>
 
                             <p className={s.hour}>
-                                10:00-11:00 до 17:00-19:00.
+                                {ticket.time}
                             </p>
                         </Box>
                         <Box width='230px' mt='10px'>
-                            <p className={s.hour}>Десткий (4 - 16 лет) — 30 AED, дети до 4 лет - бесплатно.</p>
+                            <p className={s.hour}>{ticket.about}</p>
                         </Box>
 
                         <Box display='flex' justifyContent='space-between' alignItems={'center'}>
-                            <p className={s.price}>250$</p>
+                            <p className={s.price}>{ticket.price}</p>
                             <Tooltip title="Написать в what`s app для заказа">
                                 <IconButton>
                                     <MailOutline/>
@@ -110,6 +108,6 @@ const CardTicket = () => {
         </Grid>
 
     );
-};
+})
 
-export default CardTicket;
+export const MCardTicket = motion(CardTicket)

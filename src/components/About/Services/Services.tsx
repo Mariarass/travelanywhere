@@ -1,114 +1,80 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Container, IconButton, styled, TextField} from "@mui/material";
-import {Add, Search} from "@mui/icons-material";
+import React, {useEffect} from 'react';
+import {CircularProgress, styled, TextField} from "@mui/material";
 import Title from "../../UI/Title/Title";
 import Grid from "@mui/material/Unstable_Grid2";
-import CardTour from "../../CardTour/CardTour";
-import CardTicket from "../../CartTicket/CardTicket";
-import Reviews from "../Reviews/Reviews";
-import Advantage from "../Advantage/Adventage";
+import {MCardTour} from "../../CardTour/CardTour";
 
-const CssTextField = styled(TextField)({
-
-    background: 'white',
-    width: 500,
-    borderRadius: 30,
-    color: 'AED5D2',
-    fontSize: 10,
-
-    '& label.Mui-focused': {
-        color: '#AED5D2',
-    },
-    '& label': {
-        color: '#AED5D2',
-    },
-
-    '& .MuiInput-underline:after': {
-        borderBottomColor: 'green',
-    },
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: 'white',
-            borderRadius: 30,
-
-
-        },
-        '&:hover fieldset': {
-            borderColor: 'white',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: 'white',
-
-        },
-    },
-    '@media (max-width: 640px)': {
-        width: 280,
-    }
-
-})
+import s from './Services.module.css'
+import {useSelector} from "react-redux";
+import {getTicketThunk,} from "../../../redux/ticket-reducer";
+import {tourSelector} from "../../../redux/selectors/tour-selector";
+import {ticketSelector} from "../../../redux/selectors/ticket-selector";
+import {getToursThunk} from '../../../redux/tour-reduser';
+import {useAppDispatch} from "../../../redux/store";
+import {motion} from 'framer-motion';
+import {cardAnimation} from "../../../App";
+import {MCardTicket} from "../../CartTicket/CardTicket";
 
 
 const Services = () => {
-    const [value, setValue] = useState('')
 
-    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
+    const tours = useSelector(tourSelector)
+    const tickets = useSelector(ticketSelector)
+    const dispatch = useAppDispatch()
+    const toursSlice = tours?.slice(0, 3)
+    const ticketSlice = tickets?.slice(0, 3)
 
-    }
+
+    useEffect(() => {
+        dispatch(getToursThunk())
+        dispatch(getTicketThunk())
+
+    }, [])
+
+
     return (
+        toursSlice != null && ticketSlice != null ?
+            <motion.div className={s.container}>
 
-        <Container fixed>
-
-
-            <div className="main-article">
-
-                <div>
-
-                    <CssTextField
-                        value={value}
-                        onChange={onChangeInput}
-                        id="custom-css-outlined-input"
-                        label="Экскурсия на твой выбор"
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton>
-                                    <Search/>
-                                </IconButton>
-                            ),
-                        }}
-                    />
+                <div className={s.servicesContainer}>
 
                     <Title title='Экскурсии' recommend='Рекомендуемые экскурсии' link='/tour' flex='start'/>
 
+
                     <Grid container justifyContent='center' spacing={7} marginBottom='20px'>
-                        <CardTour/>
-                        <CardTour/>
-                        <CardTour/>
+                        {toursSlice.map((el, i) =>
+                            <MCardTour
+                                key={el._id}
+                                initial='hidden'
+                                whileInView='visible'
+                                viewport={{once:true}}
+                                custom={i} variants={cardAnimation} tour={el}/>)}
                     </Grid>
+
 
                     <Title title='Билеты' recommend='Рекомендуемые билеты' link='/ticket' flex='start'/>
 
                     <Grid container justifyContent='center' spacing={7} marginBottom='20px'>
-                        <CardTicket/>
-                        <CardTicket/>
-                        <CardTicket/>
-                    </Grid>
+                        {ticketSlice.map((el, i) =>
+                            <MCardTicket
+                                key={el._id}
+                                initial='hidden'
+                                whileInView='visible'
+                                viewport={{once:true}}
+                                custom={i} variants={cardAnimation}
+                                ticket={el}
+                            />)}
 
+                    </Grid>
 
 
                 </div>
 
-                <Title title='О нас' flex='center'/>
-                <Title title='Наши счастливые гости' flex='start'/>
-                <Reviews/>
-                <Title title='Нас выбирают потому что' flex='start'/>
 
-                <Title title='Наша команда' flex='start'/>
-
-            </div>
+            </motion.div>
+            : <div className={s.progress}><CircularProgress/></div>
 
 
-        </Container>
     );
 };
 

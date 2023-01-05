@@ -9,6 +9,12 @@
 
 
 }
+.img{
+    height: 240px;
+    width: 230px;
+    border-radius: 10px;
+}
+
 .hour{
 
     font-family:  var(--font);
@@ -20,15 +26,25 @@
 
 }
 .headerCard{
+
     font-weight: lighter;
     font-size: 18px;
-    line-height: 26px;
+
 
     color: #292B38;
     text-align: left;
     font-family: raleway_f,sans-serif;
-    margin-bottom: 4px;
 
+
+
+}
+.headerContainer{
+    width: 230px;
+
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
 }
 .price{
 
@@ -39,7 +55,6 @@
     font-family: 'Cairo', sans-serif;
 }
 .ExpandMore{
-
     text-align: center;
 
 }

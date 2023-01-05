@@ -10,40 +10,49 @@ import {DirectionsWalk, LocationOn} from "@mui/icons-material";
 import {Card} from "@mui/material";
 import burj from '../assets/burj.jpg'
 import s from './TimeLine.module.css'
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../redux/store";
+import {TypeTour} from "../redux/tour-reduser";
+import {arrayPlaceSelector} from "../redux/selectors/tour-selector";
 
 export default function OppositeContentTimeline() {
-    const state=['Старый город','Мадинат Джумейра','Рамка Дубая','Пальмовый остров','Дубай Марина','Бурдж Халифа','Дубай молл']
+
+
+    const place = useSelector(arrayPlaceSelector)
+
     return (
-        <React.Fragment>
-            <Timeline sx={{
-                [`& .${timelineItemClasses.root}:before`]: {
-                    flex: 0,
-                    padding: 0,
-                },
-            }} >
-                {state.map(el=>{
-                    return(
-                        <TimelineItem>
-                            <TimelineSeparator>
+        place != null
+            ? <React.Fragment>
+                <Timeline sx={{
+                    [`& .${timelineItemClasses.root}:before`]: {
+                        flex: 0,
+                        padding: 0,
+                    },
+                }}>
+                    {place.map((el,idx) => {
+                        return (
+                            <TimelineItem key={idx}>
+                                <TimelineSeparator>
 
                                     <LocationOn/>
 
 
-                                <TimelineConnector />
-                            </TimelineSeparator>
-                            <TimelineContent>
-                                <div>
-                                    {el}
+                                    <TimelineConnector/>
+                                </TimelineSeparator>
+                                <TimelineContent>
+                                    <div>
+                                        {el}
 
-                                </div>
+                                    </div>
                                 </TimelineContent>
-                        </TimelineItem>
+                            </TimelineItem>
 
-                    )
-                })}
+                        )
+                    })}
+                </Timeline>
+            </React.Fragment>
+            : <div></div>
 
 
-            </Timeline>
-        </React.Fragment>
     );
 }

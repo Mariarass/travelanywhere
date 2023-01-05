@@ -1,71 +1,69 @@
-import React from 'react';
+import React, {FC, forwardRef} from 'react';
 import Grid from "@mui/material/Unstable_Grid2";
 import {Box, Card, CardActionArea, CardMedia, styled, TextField} from "@mui/material";
 import s from "./CardTour.module.css";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import {NavLink} from "react-router-dom";
+import {TypeTour} from "../../redux/tour-reduser";
+import {motion} from "framer-motion";
 
 
 const CssCard = styled(Card)({
 
 
-    minWidth:200,
+    minWidth: 200,
     borderRadius: 20,
-    '&:hover':{
-        background:'#D0D5FF'
+    '&:hover': {
+        background: '#efefef'
     }
-
 
 
 })
 
-const CardTour = () => {
+type TypeCardTour = {
+    tour: TypeTour
+}
+
+export const CardTour: FC<TypeCardTour> = forwardRef(({tour}, ref: React.Ref<HTMLAnchorElement> | undefined) => {
+
     return (
-        <NavLink to={'/card'} style={{textDecoration:'none'}}>
-        <Grid>
-            <CssCard>
-                <CardActionArea sx={{padding: 2}}>
-                    <CardMedia sx={{borderRadius: 4}}
-                               component="img"
-                               height="250"
-                               image="https://sun9-56.userapi.com/impg/C-wUhToXs-GIq-1_RNTB63eBd32uVbAm_ohEcA/WkjOYvuxcoA.jpg?size=939x1080&quality=96&sign=f24a53a7723207ac8d304e43dbea7cf0&type=album"
-                               alt="Paella dish"
-                               title='hello'
-                    />
+        <NavLink to={`/card/${tour._id}`} style={{textDecoration: 'none'}} ref={ref}>
+            <Grid>
+                <CssCard>
+                    <CardActionArea sx={{padding: 2}}>
+                        <img className={s.img} src={tour.img}/>
+                        <Box display='flex' paddingTop='10px' gap='10px'>
+                            <Box>
+                                <p className={s.group}>
+                                    {tour.status}
+                                </p>
+                            </Box>
 
-                    <Box display='flex' paddingTop='10px' gap='10px' >
-                        <Box>
-                            <p className={s.group}>
-                                индивидуальная экскурсия
-                            </p>
-                        </Box>
+                            <Box sx={{display: 'flex', alignItems: 'center'}}>
+                                <AccessTimeFilledIcon sx={{
+                                    fontSize: 15,
+                                    fill: '#FFC567',
+                                    display: 'flex',
+                                    justifyContent: 'end',
+                                    mr: 1
+                                }}/>
+                                <p className={s.hour}>{tour.time}</p>
 
-                        <Box sx={{display:'flex',alignItems:'center'}}>
-                            <AccessTimeFilledIcon sx={{
-                                fontSize: 15,
-                                fill: '#FFC567',
-                                display: 'flex',
-                                justifyContent: 'end'
-                            }}/>
-                            <p className={s.hour}>8ч</p>
-
+                            </Box>
 
                         </Box>
 
 
-                    </Box>
+                        <h3 className={s.headerCard}>{tour.header}</h3>
+                        <p className={s.price}>{tour.price}</p>
+                    </CardActionArea>
 
 
-                    <h3 className={s.headerCard}>Дубай - первая встреча</h3>
-                    <p className={s.price}>250$</p>
-                </CardActionArea>
+                </CssCard>
 
-
-            </CssCard>
-
-        </Grid>
+            </Grid>
         </NavLink>
     );
-};
+})
 
-export default CardTour;
+export const MCardTour = motion(CardTour)

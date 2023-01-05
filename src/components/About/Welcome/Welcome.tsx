@@ -1,6 +1,7 @@
 import React from 'react';
 import background from "../../../assets/base.svg";
 import front from "../../../assets/front.svg";
+import InputSearch from "./InputSearch/InputSearch";
 
 const Welcome = () => {
     return (
@@ -18,7 +19,10 @@ const Welcome = () => {
                         <div className="layers__title">ДОБРО ПОЖАЛОВАТЬ<br/> В ОАЭ</div>
                     </div>
 
+
+
                 </div>
+
 
                 {/*<div className="layer layers__base" style={{backgroundImage: `url(${background})`}}></div>
                 <div className="layer ">

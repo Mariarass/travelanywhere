@@ -14,6 +14,8 @@ type TitleProps = {
 }
 
 const Title: React.FC<TitleProps> = ({title, recommend, link,flex,children}) => {
+
+
     return (
         <Grid container mb={recommend?'30px':'5px'} mt='10px'>
             <Grid xs={12} display='flex' justifyContent={flex} alignItems='center'>

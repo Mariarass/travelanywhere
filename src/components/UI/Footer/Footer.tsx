@@ -1,17 +1,17 @@
 import React from 'react';
-import {Box, Container, IconButton} from "@mui/material";
+import { IconButton} from "@mui/material";
 import {NavLink} from "react-router-dom";
 
-import {Instagram, MailOutline, Timeline, WhatsApp} from "@mui/icons-material";
+import {Instagram, MailOutline, WhatsApp} from "@mui/icons-material";
 import s from './Footer.module.css'
-import {TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator} from "@mui/lab";
+import logo from '../../../assets/logo.png'
 
 const Footer = () => {
     return (
         <footer>
             <div className={s.footer}>
                 <div>
-                    <p>logo</p>
+                    <img className={s.logo} src={logo}/>
                     <div className={s.nav}>
                         <NavLink  to={'/about'}  className={s.link}>
                             О нас
@@ -43,9 +43,6 @@ const Footer = () => {
                         </a>
                     </div>
 
-                    <div>
-                        @2021
-                    </div>
 
 
                 </div>
